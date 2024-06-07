@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model PersonalInfo {
+  personal_info_id       String    @id @default(uuid())
+  user_id                String
+  reference              DateTime  @db.Date
+  last_period            DateTime? @db.Date
+  menstrual_cycle_status String?   @db.VarChar
+  weight                 Decimal?  @db.Decimal
+  height                 Decimal?  @db.Decimal
+  waist_circumference    Decimal?  @db.Decimal
+  fsh_value              Decimal?  @db.Decimal
+  fsh_unit               String?   @db.VarChar
+  estradiol_value        Decimal?  @db.Decimal
+  estradiol_unit         String?   @db.VarChar
+  date_created           DateTime  @default(now()) @db.Timestamp(6)
+  deleted                Boolean?  @default(false)
+
+  //user User @relation(fields: [user_id], references: [user_id])
+  @@unique([user_id])
+}
